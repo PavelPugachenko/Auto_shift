@@ -1,5 +1,9 @@
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,9 +75,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("NAME"),
+        "USER": os.getenv("USER"),
+        "PASSWORD": os.getenv("PASSWORD"),
+        "HOST": os.getenv("HOST"),
+        "PORT": os.getenv("PORT"),
     }
 }
 
@@ -112,9 +120,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+
+MEDIA_ROOT = BASE_DIR / "media/"
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.CustomUser"
